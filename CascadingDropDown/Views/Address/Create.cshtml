@@ -1,0 +1,91 @@
+﻿@model CascadingDropDown.Models.address
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Address</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.street)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.street)
+            @Html.ValidationMessageFor(model => model.street)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.country_id, "country")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("country_id", String.Empty)
+            @Html.ValidationMessageFor(model => model.country_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.state_id, "state")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("state_id", String.Empty)
+            @Html.ValidationMessageFor(model => model.state_id)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.zip)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.zip)
+            @Html.ValidationMessageFor(model => model.zip)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(document).ready(function ()
+        {
+            //Dropdownlist Selectedchange event
+            $("#country_id").change(function ()
+            {
+                $("#state_id").empty();
+                $.ajax({
+                    type:'POST',
+                    url: '@Url.Action("SelectStates")',
+                    dataType: 'json',
+                    data: { id: $("#country_id").val() },
+                    success: function (states)
+                    {
+                        $.each(states, function (i, state)
+                        {
+                            $("#state_id").append('<option value="'
+                                + state.state_id + '">'
+                                + state.state_name + '</option>');
+                        });
+                    },
+                    error: function (ex)
+                    {
+                        alert('Failed to retrieve states.' + ex.responseText);
+                    }
+                });
+                return false;
+            })
+        });
+    </script>
+}

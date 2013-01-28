@@ -1,0 +1,53 @@
+﻿@model CascadingDropDown.Models.address
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>address</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.address_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.address_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.street)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.street)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.country.country_name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.country.country_name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.state.state_name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.state.state_name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.zip)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.zip)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

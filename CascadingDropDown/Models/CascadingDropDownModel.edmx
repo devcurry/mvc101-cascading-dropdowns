@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CascadingDropdownSampleModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="CascadingDropdownSampleModelStoreContainer">
+          <EntitySet Name="address" EntityType="CascadingDropdownSampleModel.Store.address" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="country" EntityType="CascadingDropdownSampleModel.Store.country" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="state" EntityType="CascadingDropdownSampleModel.Store.state" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_address_country" Association="CascadingDropdownSampleModel.Store.FK_address_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_address_state" Association="CascadingDropdownSampleModel.Store.FK_address_state">
+            <End Role="state" EntitySet="state" />
+            <End Role="address" EntitySet="address" />
+          </AssociationSet>
+          <AssociationSet Name="FK_state_country" Association="CascadingDropdownSampleModel.Store.FK_state_country">
+            <End Role="country" EntitySet="country" />
+            <End Role="state" EntitySet="state" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="address_id" />
+          </Key>
+          <Property Name="address_id" Type="int" Nullable="false" />
+          <Property Name="street" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="country_id" Type="int" />
+          <Property Name="state_id" Type="int" />
+          <Property Name="zip" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="country_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="country_abbrev" Type="varchar" Nullable="false" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="country_id" Type="int" />
+          <Property Name="state_name" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="state_abbrev" Type="varchar" Nullable="false" MaxLength="2" />
+        </EntityType>
+        <Association Name="FK_address_country">
+          <End Role="country" Type="CascadingDropdownSampleModel.Store.country" Multiplicity="0..1" />
+          <End Role="address" Type="CascadingDropdownSampleModel.Store.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_address_state">
+          <End Role="state" Type="CascadingDropdownSampleModel.Store.state" Multiplicity="0..1" />
+          <End Role="address" Type="CascadingDropdownSampleModel.Store.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_state_country">
+          <End Role="country" Type="CascadingDropdownSampleModel.Store.country" Multiplicity="0..1" />
+          <End Role="state" Type="CascadingDropdownSampleModel.Store.state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="state">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CascadingDropdownSampleModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CascadingDropdownSampleEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="CascadingDropdownSampleModel.address" />
+          <EntitySet Name="countries" EntityType="CascadingDropdownSampleModel.country" />
+          <EntitySet Name="states" EntityType="CascadingDropdownSampleModel.state" />
+          <AssociationSet Name="FK_address_country" Association="CascadingDropdownSampleModel.FK_address_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_address_state" Association="CascadingDropdownSampleModel.FK_address_state">
+            <End Role="state" EntitySet="states" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_state_country" Association="CascadingDropdownSampleModel.FK_state_country">
+            <End Role="country" EntitySet="countries" />
+            <End Role="state" EntitySet="states" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="address">
+          <Key>
+            <PropertyRef Name="address_id" />
+          </Key>
+          <Property Name="address_id" Type="Int32" Nullable="false" />
+          <Property Name="street" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="country_id" Type="Int32" />
+          <Property Name="state_id" Type="Int32" />
+          <Property Name="zip" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="country" Relationship="CascadingDropdownSampleModel.FK_address_country" FromRole="address" ToRole="country" />
+          <NavigationProperty Name="state" Relationship="CascadingDropdownSampleModel.FK_address_state" FromRole="address" ToRole="state" />
+        </EntityType>
+        <EntityType Name="country">
+          <Key>
+            <PropertyRef Name="country_id" />
+          </Key>
+          <Property Name="country_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="country_name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="country_abbrev" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="addresses" Relationship="CascadingDropdownSampleModel.FK_address_country" FromRole="country" ToRole="address" />
+          <NavigationProperty Name="states" Relationship="CascadingDropdownSampleModel.FK_state_country" FromRole="country" ToRole="state" />
+        </EntityType>
+        <EntityType Name="state">
+          <Key>
+            <PropertyRef Name="state_id" />
+          </Key>
+          <Property Name="state_id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="country_id" Type="Int32" />
+          <Property Name="state_name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="state_abbrev" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="addresses" Relationship="CascadingDropdownSampleModel.FK_address_state" FromRole="state" ToRole="address" />
+          <NavigationProperty Name="country" Relationship="CascadingDropdownSampleModel.FK_state_country" FromRole="state" ToRole="country" />
+        </EntityType>
+        <Association Name="FK_address_country">
+          <End Role="country" Type="CascadingDropdownSampleModel.country" Multiplicity="0..1" />
+          <End Role="address" Type="CascadingDropdownSampleModel.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_address_state">
+          <End Role="state" Type="CascadingDropdownSampleModel.state" Multiplicity="0..1" />
+          <End Role="address" Type="CascadingDropdownSampleModel.address" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="state">
+              <PropertyRef Name="state_id" />
+            </Principal>
+            <Dependent Role="address">
+              <PropertyRef Name="state_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_state_country">
+          <End Role="country" Type="CascadingDropdownSampleModel.country" Multiplicity="0..1" />
+          <End Role="state" Type="CascadingDropdownSampleModel.state" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="country">
+              <PropertyRef Name="country_id" />
+            </Principal>
+            <Dependent Role="state">
+              <PropertyRef Name="country_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CascadingDropdownSampleModelStoreContainer" CdmEntityContainer="CascadingDropdownSampleEntities">
+          <EntitySetMapping Name="addresses">
+            <EntityTypeMapping TypeName="CascadingDropdownSampleModel.address">
+              <MappingFragment StoreEntitySet="address">
+                <ScalarProperty Name="address_id" ColumnName="address_id" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countries">
+            <EntityTypeMapping TypeName="CascadingDropdownSampleModel.country">
+              <MappingFragment StoreEntitySet="country">
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="country_name" ColumnName="country_name" />
+                <ScalarProperty Name="country_abbrev" ColumnName="country_abbrev" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="states">
+            <EntityTypeMapping TypeName="CascadingDropdownSampleModel.state">
+              <MappingFragment StoreEntitySet="state">
+                <ScalarProperty Name="state_id" ColumnName="state_id" />
+                <ScalarProperty Name="country_id" ColumnName="country_id" />
+                <ScalarProperty Name="state_name" ColumnName="state_name" />
+                <ScalarProperty Name="state_abbrev" ColumnName="state_abbrev" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

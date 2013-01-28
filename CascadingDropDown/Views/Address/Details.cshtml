@@ -1,0 +1,50 @@
+﻿@model CascadingDropDown.Models.address
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>address</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.address_id)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.address_id)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.street)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.street)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.country.country_name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.country.country_name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.state.state_name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.state.state_name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.zip)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.zip)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id=Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
